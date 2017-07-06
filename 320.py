@@ -6,11 +6,15 @@ def path_to_philosophy(topic):
 
     visited_pages = list()
 
-    def valid_link(node):
-        return node.name == 'a' and node['href'].startswith('/wiki/') and \
-               '(page does not exist)' not in node['title']
-
     def find_path(topic):
+        def valid_link(node):
+            # not an external link
+            # not a link to current page
+            # not a link to non-existent page
+            return node.name == 'a' and node['href'].startswith('/wiki/') and \
+                   (topic + '#') not in node['href'] and \
+                   'page does not exist' not in node['title']
+
         print(topic)
 
         if topic == "Philosophy":

@@ -32,7 +32,7 @@ def path_to_philosophy(topic):
             for paragraph in paragraphs:
                 parantheses_count = 0
                 for node in paragraph.contents:
-                    parantheses_count += str(node).count('(') - str(node).count(')')
+                    parantheses_count += node.string.count('(') - node.string.count(')')
                     if parantheses_count == 0 and valid_link(node):
                         return find_path(node['href'].replace('/wiki/', ''))
         except Exception:

@@ -6,6 +6,10 @@ def path_to_philosophy(topic):
 
     visited_pages = list()
 
+    def valid_link(node):
+        return node.name == 'a' and node['href'].startswith('/wiki/') and \
+               '(page does not exist)' not in node['title']
+
     def find_path(topic):
         print(topic)
 
@@ -29,8 +33,7 @@ def path_to_philosophy(topic):
                 parantheses_count = 0
                 for node in paragraph.contents:
                     parantheses_count += str(node).count('(') - str(node).count(')')
-                    
-                    if parantheses_count == 0 and node.name == 'a' and node['href'].startswith('/wiki'):
+                    if parantheses_count == 0 and valid_link(node):
                         return find_path(node['href'].replace('/wiki/', ''))
         except Exception:
             print("No such page exist!")
@@ -38,4 +41,4 @@ def path_to_philosophy(topic):
 
     return find_path(topic)
 
-path_to_philosophy('Nikola_Gruevski')
+path_to_philosophy('Penang')
